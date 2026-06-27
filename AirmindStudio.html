@@ -153,7 +153,7 @@
   /* typewriter: JS reserves the final height via min-height, then types into .typed */
   .hero-title .caret{
     display:inline-block; width:.5ch; height:.12em; margin-left:.06em; margin-right:calc(-.5ch - .06em);
-    vertical-align:.04em; background:var(--accent); border-radius:1px; box-shadow:0 0 8px rgba(var(--accent-rgb),.6);
+    vertical-align:baseline; background:var(--accent); border-radius:1px; box-shadow:0 0 8px rgba(var(--accent-rgb),.6);
     animation:blink 1.05s steps(1) infinite;   /* negative right margin = zero layout footprint, never wraps alone */
   }
   @keyframes blink{0%,50%{opacity:1} 50.01%,100%{opacity:0}}
