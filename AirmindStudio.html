@@ -228,19 +228,19 @@
   }
   /* Stack the form on phones, kept compact — the email field never gets crushed by the CTA */
   @media (max-width:520px){
-    .capture{max-width:320px; gap:10px}
+    .capture{max-width:340px; gap:10px}
     .pill{
-      flex-direction:column; align-items:stretch; gap:10px;
+      flex-direction:column; align-items:center; gap:10px;
       padding:0; background:none; border:none; backdrop-filter:none;
     }
     .pill:focus-within{box-shadow:none}
     .pill input{
-      flex:none; height:56px; padding:0 18px; border-radius:14px; text-align:center; font-size:16px;
+      flex:none; width:auto; height:56px; padding:0 22px; border-radius:14px; text-align:center; font-size:16px;
       background:rgba(255,255,255,.04); border:1px solid rgba(var(--accent-rgb),.22); backdrop-filter:blur(10px);
       transition:border-color .3s var(--ease), box-shadow .3s var(--ease);
     }
     .pill input:focus{border-color:rgba(var(--accent-rgb),.6); box-shadow:0 0 0 4px rgba(var(--accent-rgb),.10)}
-    .submit{width:100%; height:50px; border-radius:14px; justify-content:center; padding:0 18px; font-size:14px}
+    .submit{width:auto; height:50px; border-radius:14px; justify-content:center; padding:0 26px; font-size:14px}
   }
   @media (max-width:300px){
     .wordmark .wm-sub{display:none}   /* only on the very narrowest legacy screens, reclaim space */
@@ -302,7 +302,7 @@
         <form id="waitlist" novalidate>
           <div class="pill">
             <input id="email" type="email" name="email" autocomplete="email" inputmode="email"
-                   spellcheck="false" autocapitalize="off"
+                   spellcheck="false" autocapitalize="off" size="15"
                    placeholder="you@email.com" data-i18n-ph="emailPlaceholder" aria-label="Email address" required>
             <button class="submit" type="submit">
               <span class="label" data-i18n="cta">Request access</span>
@@ -322,7 +322,7 @@
 
         <p class="note reveal d5">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l1.7 6.1 6.1 1.7-6.1 1.7L12 18.1l-1.7-6.1L4.2 10.3l6.1-1.7z"/></svg>
-          <span data-i18n="note">One email at launch — don't miss it.</span>
+          <span data-i18n="note">One email at launch.</span>
         </p>
       </div>
     </main>
@@ -347,7 +347,7 @@
       subline:"A new way of creating is coming to life — built by artists, powered by intelligence. Request access to be the first to know.",
       emailPlaceholder:"you@email.com",
       cta:"Request access",
-      note:"One email at launch — don't miss it.",
+      note:"One email at launch.",
       errorMsg:"Please enter a valid email.",
       success:"You're on the list.",
       successNote:"We'll reach out before launch. Keep an eye on your inbox.",
@@ -359,7 +359,7 @@
       subline:"Un nouveau studio vidéo prend forme — imaginé par des artistes, propulsé par l'intelligence. La révélation approche.",
       emailPlaceholder:"vous@email.com",
       cta:"Demander un accès",
-      note:"Un seul mail à l'ouverture, ne le loupez pas.",
+      note:"Un seul mail à l'ouverture.",
       errorMsg:"Veuillez saisir un e-mail valide.",
       success:"Vous êtes sur la liste.",
       successNote:"Nous vous écrirons avant le lancement. Surveillez votre boîte mail.",
