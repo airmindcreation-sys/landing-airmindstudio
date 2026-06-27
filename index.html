@@ -2,6 +2,7 @@
 <html lang="en" data-theme="pulse">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Airmind Studio — Next-generation AI video studio</title>
 <meta name="description" content="A new way of creating is coming to life — built by artists, powered by intelligence. Request access to Airmind Studio. Launching 2026.">
@@ -135,21 +136,27 @@
   }
 
   .kicker{
-    display:inline-flex; align-items:center; gap:9px;
-    font-family:'Space Mono',monospace; font-size:clamp(10.5px,2.6vw,12px);
-    letter-spacing:.22em; text-transform:uppercase; color:var(--muted);
-    padding:7px 15px 7px 12px; border-radius:100px;
-    border:1px solid rgba(var(--accent-rgb),.18);
-    background:rgba(var(--accent-rgb),.04); backdrop-filter:blur(6px);
+    display:inline-flex; align-items:center; justify-content:center; gap:clamp(9px,2.4vw,14px);
+    font-family:'Space Mono',monospace; font-size:clamp(10px,2.5vw,11.5px);
+    letter-spacing:.34em; text-transform:uppercase; max-width:100%;
   }
-  .kicker .pip{width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent); animation:pulse 2.6s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.45; transform:scale(.8)}}
+  .kicker .label{color:var(--fg); opacity:.8}
+  .kicker .pip{width:5px; height:5px; border-radius:50%; flex:none; background:var(--accent); box-shadow:0 0 10px var(--accent); animation:pulse 2.6s ease-in-out infinite}
+  .kicker .hair{flex:none; width:clamp(24px,4vw,54px); height:1px; background:linear-gradient(90deg,transparent,rgba(var(--accent-rgb),.55))}
+  .kicker .hair.r{background:linear-gradient(90deg,rgba(var(--accent-rgb),.55),transparent)}
+  @keyframes pulse{0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.35; transform:scale(.7)}}
 
   h1{
     font-weight:var(--display-weight); letter-spacing:var(--display-track); line-height:.98;
-    font-size:clamp(2.5rem,8.6vw,6.5rem); text-wrap:balance; max-width:15ch;
+    font-size:clamp(2.5rem,8.6vw,6.5rem); max-width:15ch;
   }
-  h1 em{font:inherit; font-style:normal; color:inherit; letter-spacing:inherit}
+  /* typewriter: JS reserves the final height via min-height, then types into .typed */
+  .hero-title .caret{
+    display:inline-block; width:.5ch; height:.12em; margin-left:.06em; margin-right:calc(-.5ch - .06em);
+    vertical-align:.04em; background:var(--accent); border-radius:1px; box-shadow:0 0 8px rgba(var(--accent-rgb),.6);
+    animation:blink 1.05s steps(1) infinite;   /* negative right margin = zero layout footprint, never wraps alone */
+  }
+  @keyframes blink{0%,50%{opacity:1} 50.01%,100%{opacity:0}}
 
   .subline{
     max-width:33rem; font-size:clamp(.95rem,3.4vw,1.12rem); font-weight:300; line-height:1.62;
@@ -222,8 +229,9 @@
   @media (max-width:560px){
     .wordmark{font-size:13.5px; gap:8px}
     .wordmark .glyph{width:16px; height:16px}
-    .kicker{letter-spacing:.14em; font-size:10px; padding:6px 12px 6px 10px}
-    h1{line-height:1.0; font-size:clamp(2.3rem,10vw,3.4rem)}
+    .kicker{letter-spacing:.18em; font-size:10px; gap:9px}
+    .kicker .hair{display:none}            /* clean text-only eyebrow on phones */
+    h1{line-height:1.0; font-size:clamp(2.9rem,12.5vw,4rem)}
     .controls{gap:14px}
   }
   /* Stack the form on phones, kept compact — the email field never gets crushed by the CTA */
@@ -241,7 +249,13 @@
     }
     .pill input:focus{border-color:rgba(var(--accent-rgb),.6); box-shadow:0 0 0 4px rgba(var(--accent-rgb),.10)}
     .submit{width:auto; height:50px; border-radius:14px; justify-content:center; padding:0 26px; font-size:14px}
+
+    /* two-step: show only the CTA first; the email field appears below it on tap */
+    form.two-step .submit{order:0}
+    form.two-step .pill input{order:1; display:none}
+    form.two-step.revealed .pill input{display:inline-block; animation:revealDown .42s var(--ease) both}
   }
+  @keyframes revealDown{from{opacity:0; transform:translateY(-10px) scale(.97)} to{opacity:1; transform:translateY(0) scale(1)}}
   @media (max-width:300px){
     .wordmark .wm-sub{display:none}   /* only on the very narrowest legacy screens, reclaim space */
   }
@@ -292,9 +306,14 @@
     </nav>
 
     <main>
-      <span class="kicker reveal d1"><span class="pip" aria-hidden="true"></span><span data-i18n="kicker">Next-generation AI video studio</span></span>
+      <span class="kicker reveal d1">
+        <span class="hair l" aria-hidden="true"></span>
+        <span class="pip" aria-hidden="true"></span>
+        <span class="label" data-i18n="kicker">Next-generation AI video studio</span>
+        <span class="hair r" aria-hidden="true"></span>
+      </span>
 
-      <h1 class="reveal d2"><span data-i18n="taglineLead">Create what you </span><em data-i18n="taglineEm">want.</em></h1>
+      <h1 class="hero-title" aria-label="Create what you want."><span class="typed" aria-hidden="true"></span></h1>
 
       <p class="subline reveal d3" data-i18n="subline">A new way of creating is coming to life — built by artists, powered by intelligence. Request access to be the first to know.</p>
 
@@ -383,6 +402,41 @@
     set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}
   };
 
+  /* ===================== HERO TYPEWRITER ===================== */
+  var REDUCE = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var h1El=$(".hero-title"), typedEl=$(".hero-title .typed");
+  var caretEl=document.createElement("span"); caretEl.className="caret";
+  var typeTimer=null, currentTitle="";
+  // Reserve the title's final (multi-line) height so typing never shifts the layout below.
+  function reserveHeight(){
+    if(!h1El || !typedEl) return;
+    var saved=typedEl.textContent;
+    h1El.style.minHeight="auto";
+    typedEl.textContent=currentTitle;                 // measure full footprint
+    h1El.style.minHeight=h1El.offsetHeight+"px";
+    typedEl.textContent=saved; typedEl.appendChild(caretEl);   // restore current state
+  }
+  function typeTitle(text){
+    if(!h1El || !typedEl){ return; }
+    currentTitle=text; h1El.setAttribute("aria-label", text);
+    if(typeTimer){ clearInterval(typeTimer); typeTimer=null; }
+    h1El.style.minHeight="auto";
+    typedEl.textContent=text; typedEl.appendChild(caretEl);
+    h1El.style.minHeight=h1El.offsetHeight+"px";       // lock the final height up front
+    if(REDUCE){ return; }                              // no animation — full text already shown
+    typedEl.textContent="";
+    typedEl.appendChild(caretEl);
+    var i=0;
+    typeTimer=setInterval(function(){
+      i++;
+      typedEl.textContent=text.slice(0,i);             // replacing text drops the caret...
+      typedEl.appendChild(caretEl);                    // ...so re-attach it at the end
+      if(i>=text.length){ clearInterval(typeTimer); typeTimer=null; }
+    }, 46);
+  }
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(reserveHeight); }
+  var titleRT; window.addEventListener("resize", function(){ clearTimeout(titleRT); titleRT=setTimeout(reserveHeight,200); });
+
   /* ===================== LANGUAGE ===================== */
   var currentLang = "en";
   function applyLang(lang){
@@ -391,6 +445,7 @@
     $$("[data-i18n]").forEach(function(el){ var k=el.getAttribute("data-i18n"); if(d[k]!=null) el.textContent=d[k]; });
     $$("[data-i18n-ph]").forEach(function(el){ var k=el.getAttribute("data-i18n-ph"); if(d[k]!=null) el.setAttribute("placeholder",d[k]); });
     $$(".lang button").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-lang")===lang)); });
+    typeTitle((d.taglineLead||"") + (d.taglineEm||""));   // (re)type the hero title
     store.set("am_lang", lang);
     currentLang = lang;
   }
@@ -418,8 +473,28 @@
   function showError(msg){ errBox.textContent=msg||""; }
   email.addEventListener("input", function(){ if(errBox.textContent) showError(""); });
 
+  /* On phones, reveal the email field only after the first tap on the CTA */
+  var mqPhone = window.matchMedia("(max-width:520px)");
+  var emailRevealed = false;
+  function syncTwoStep(){
+    if(mqPhone.matches){ form.classList.add("two-step"); }
+    else { form.classList.remove("two-step","revealed"); emailRevealed=false; }
+  }
+  syncTwoStep();
+  if(mqPhone.addEventListener) mqPhone.addEventListener("change", syncTwoStep);
+  else if(mqPhone.addListener) mqPhone.addListener(syncTwoStep);
+
   form.addEventListener("submit", function(e){
     e.preventDefault();
+
+    // step 1 (phone): first tap just reveals the field below the button
+    if(form.classList.contains("two-step") && !emailRevealed){
+      emailRevealed = true;
+      form.classList.add("revealed");
+      requestAnimationFrame(function(){ try{ email.focus(); }catch(_){} });
+      return;
+    }
+
     var val=(email.value||"").trim();
     if(!EMAIL_RE.test(val)){ showError((I18N[currentLang]||I18N.en).errorMsg); email.focus(); return; }
     showError("");
