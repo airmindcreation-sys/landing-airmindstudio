@@ -228,19 +228,19 @@
   }
   /* Stack the form on phones, kept compact — the email field never gets crushed by the CTA */
   @media (max-width:520px){
-    .capture{max-width:300px; gap:12px}
+    .capture{max-width:320px; gap:10px}
     .pill{
-      flex-direction:column; align-items:stretch; gap:8px;
+      flex-direction:column; align-items:stretch; gap:10px;
       padding:0; background:none; border:none; backdrop-filter:none;
     }
     .pill:focus-within{box-shadow:none}
     .pill input{
-      height:44px; padding:0 18px; border-radius:100px; text-align:center; font-size:16px;
+      flex:none; height:56px; padding:0 18px; border-radius:14px; text-align:center; font-size:16px;
       background:rgba(255,255,255,.04); border:1px solid rgba(var(--accent-rgb),.22); backdrop-filter:blur(10px);
       transition:border-color .3s var(--ease), box-shadow .3s var(--ease);
     }
     .pill input:focus{border-color:rgba(var(--accent-rgb),.6); box-shadow:0 0 0 4px rgba(var(--accent-rgb),.10)}
-    .submit{width:100%; height:44px; justify-content:center; padding:0 18px; font-size:13.5px}
+    .submit{width:100%; height:50px; border-radius:14px; justify-content:center; padding:0 18px; font-size:14px}
   }
   @media (max-width:300px){
     .wordmark .wm-sub{display:none}   /* only on the very narrowest legacy screens, reclaim space */
