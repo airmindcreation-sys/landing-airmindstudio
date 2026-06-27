@@ -18,7 +18,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Sora:wght@200;300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
 
 <style>
   /* ============================ THEME TOKENS ============================ */
@@ -54,8 +54,9 @@
   }
   ::selection{background:rgba(var(--accent-rgb),.22); color:var(--fg)}
   a{color:inherit; text-decoration:none}
-  button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit}
+  button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; touch-action:manipulation}
   input{font-family:inherit}
+  button,a,input{-webkit-tap-highlight-color:transparent}
 
   /* ============================ BACKDROP LAYERS ============================ */
   #constellation{position:fixed; inset:0; width:100%; height:100%; z-index:0; display:block}
@@ -148,12 +149,7 @@
     font-weight:var(--display-weight); letter-spacing:var(--display-track); line-height:.98;
     font-size:clamp(2.5rem,8.6vw,6.5rem); text-wrap:balance; max-width:15ch;
   }
-  h1 em{
-    font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400;
-    letter-spacing:0; color:var(--accent);
-    /* optical balance: serif italic runs larger, nudge size */
-    font-size:1.06em; padding-right:.04em;
-  }
+  h1 em{font:inherit; font-style:normal; color:inherit; letter-spacing:inherit}
 
   .subline{
     max-width:33rem; font-size:clamp(.95rem,3.4vw,1.12rem); font-weight:300; line-height:1.62;
@@ -224,25 +220,30 @@
 
   /* ============================ RESPONSIVE ============================ */
   @media (max-width:560px){
-    .wordmark .wm-sub{display:none}   /* keep "airmind", drop "studio" word to save room */
-    .kicker{letter-spacing:.16em}
-    h1{line-height:1.0}
+    .wordmark{font-size:13.5px; gap:8px}
+    .wordmark .glyph{width:16px; height:16px}
+    .kicker{letter-spacing:.14em; font-size:10px; padding:6px 12px 6px 10px}
+    h1{line-height:1.0; font-size:clamp(2.3rem,10vw,3.4rem)}
+    .controls{gap:14px}
   }
-  /* Stack the form on phones so the email field never gets crushed by the CTA */
+  /* Stack the form on phones, kept compact — the email field never gets crushed by the CTA */
   @media (max-width:520px){
+    .capture{max-width:300px; gap:12px}
     .pill{
-      flex-direction:column; align-items:stretch; gap:10px;
+      flex-direction:column; align-items:stretch; gap:8px;
       padding:0; background:none; border:none; backdrop-filter:none;
     }
     .pill:focus-within{box-shadow:none}
     .pill input{
-      height:54px; padding:0 22px; border-radius:100px; text-align:center;
+      height:44px; padding:0 18px; border-radius:100px; text-align:center; font-size:16px;
       background:rgba(255,255,255,.04); border:1px solid rgba(var(--accent-rgb),.22); backdrop-filter:blur(10px);
       transition:border-color .3s var(--ease), box-shadow .3s var(--ease);
     }
     .pill input:focus{border-color:rgba(var(--accent-rgb),.6); box-shadow:0 0 0 4px rgba(var(--accent-rgb),.10)}
-    .submit{width:100%; height:54px; justify-content:center; padding:0 20px}
-    .capture{max-width:380px}
+    .submit{width:100%; height:44px; justify-content:center; padding:0 18px; font-size:13.5px}
+  }
+  @media (max-width:300px){
+    .wordmark .wm-sub{display:none}   /* only on the very narrowest legacy screens, reclaim space */
   }
   @media (min-height:760px) and (min-width:680px){
     main{gap:clamp(24px,3.6vh,34px)}
@@ -300,7 +301,8 @@
       <div class="capture reveal d4">
         <form id="waitlist" novalidate>
           <div class="pill">
-            <input id="email" type="email" autocomplete="email" inputmode="email"
+            <input id="email" type="email" name="email" autocomplete="email" inputmode="email"
+                   spellcheck="false" autocapitalize="off"
                    placeholder="you@email.com" data-i18n-ph="emailPlaceholder" aria-label="Email address" required>
             <button class="submit" type="submit">
               <span class="label" data-i18n="cta">Request access</span>
@@ -319,8 +321,8 @@
         </div>
 
         <p class="note reveal d5">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6"/></svg>
-          <span data-i18n="note">No spam — one email when the doors open.</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l1.7 6.1 6.1 1.7-6.1 1.7L12 18.1l-1.7-6.1L4.2 10.3l6.1-1.7z"/></svg>
+          <span data-i18n="note">One email at launch — don't miss it.</span>
         </p>
       </div>
     </main>
@@ -345,7 +347,7 @@
       subline:"A new way of creating is coming to life — built by artists, powered by intelligence. Request access to be the first to know.",
       emailPlaceholder:"you@email.com",
       cta:"Request access",
-      note:"No spam — one email when the doors open.",
+      note:"One email at launch — don't miss it.",
       errorMsg:"Please enter a valid email.",
       success:"You're on the list.",
       successNote:"We'll reach out before launch. Keep an eye on your inbox.",
@@ -357,7 +359,7 @@
       subline:"Un nouveau studio vidéo prend forme — imaginé par des artistes, propulsé par l'intelligence. La révélation approche.",
       emailPlaceholder:"vous@email.com",
       cta:"Demander un accès",
-      note:"Pas de spam — un seul e-mail à l'ouverture.",
+      note:"Un seul mail à l'ouverture, ne le loupez pas.",
       errorMsg:"Veuillez saisir un e-mail valide.",
       success:"Vous êtes sur la liste.",
       successNote:"Nous vous écrirons avant le lancement. Surveillez votre boîte mail.",
